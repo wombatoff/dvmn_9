@@ -8,6 +8,7 @@ spec:
   startingDeadlineSeconds: 30
   jobTemplate:
     spec:
+      ttlSecondsAfterFinished: 3600
       template:
         spec:
           containers:

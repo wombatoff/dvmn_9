@@ -1,0 +1,79 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: clear-django-sessions-cron
+  namespace: edu-goofy-allen
+spec:
+  schedule: "0 0 * * *"
+  startingDeadlineSeconds: 30
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: django
+            image: wombatoff/django-app:latest
+            command: ["python", "manage.py", "clearsessions"]
+            env:
+            - name: SECRET_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: django-app-config
+                  key: SECRET_KEY
+            - name: DEBUG
+              valueFrom:
+                configMapKeyRef:
+                  name: django-app-config
+                  key: DEBUG
+            - name: ALLOWED_HOSTS
+              valueFrom:
+                configMapKeyRef:
+                  name: django-app-config
+                  key: ALLOWED_HOSTS
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: name
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: password
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: host
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: port
+
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: bucket
+                  key: access_key
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: bucket
+                  key: secret_key
+            - name: AWS_STORAGE_BUCKET_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: bucket
+                  key: bucket_name
+            - name: AWS_S3_ENDPOINT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: bucket
+                  key: endpoint_url
+          restartPolicy: OnFailure

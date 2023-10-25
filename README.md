@@ -35,3 +35,4 @@ kubectl apply -f django-migrate-job.yaml
 ```shell-session
 kubectl apply -f django-createsuperuser-job.yaml
 ```
+Рабочий проект будет доступен по адресу https://edu-goofy-allen.sirius-k8s.dvmn.org/

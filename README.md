@@ -35,4 +35,9 @@ kubectl apply -f django-migrate-job.yaml
 ```shell-session
 kubectl apply -f django-createsuperuser-job.yaml
 ```
-Рабочий проект будет доступен по адресу https://edu-goofy-allen.sirius-k8s.dvmn.org/
+Рабочий проект будет доступен по адресу:
+https://edu-goofy-allen.sirius-k8s.dvmn.org/
+
+
+Ссылка на описание выделенных ресурсов облачной инфраструктуры с инструкциями как до них добраться:
+https://sirius-env-registry.website.yandexcloud.net/edu-goofy-allen.html
